@@ -22,6 +22,7 @@ public enum MainClient{
 
     public static final String ABANDON_KEYWORD = "c";
     public static final String QUIT_KEYWORD = "q";
+    private static final String REMOVE_KEYWORD = "rm";
     public static final String SAVE_PATH = Const.SAVE_PATH;
     public static final String HOST_REG = Const.HOST_REG;
     public static final String URL_PARAM_REG = Const.URL_PARAMS_REG;
@@ -120,7 +121,14 @@ public enum MainClient{
         BufferedWriter writer = new BufferedWriter(new FileWriter(jsonFile));
         writer.write(json);
         writer.close();
-        System.out.println("写入完成,文件地址:"+jsonFile.getAbsolutePath());
+        System.out.println("写入完成,文件地址:"+jsonFile.getAbsolutePath()+",输入"+ REMOVE_KEYWORD +"删除这个文件,其余则继续录入.");
+        String action = scanner.nextLine();
+        if(Objects.equals(action,REMOVE_KEYWORD)){
+            boolean delete = jsonFile.delete();
+            if(!delete){
+                System.out.println("删除失败");
+            }
+        }
     }
 
     /**替换敏感数据*/
